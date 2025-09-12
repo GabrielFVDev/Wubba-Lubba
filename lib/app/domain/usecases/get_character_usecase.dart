@@ -5,7 +5,7 @@ class GetCharacterUseCase {
 
   GetCharacterUseCase(this.repository);
 
-  Future<CharacterEntity?> getById(int id) {
+  Future<CharacterEntity?> getCharacterById(int id) {
     return repository.getCharacterById(id);
   }
 }

@@ -6,7 +6,7 @@ class GetAllCharactersUseCase {
 
   GetAllCharactersUseCase(this.repository);
 
-  Future<List<CharacterEntity>> getAll() {
+  Future<List<CharacterEntity>> getAllCharacters() {
     return repository.getAllCharacters();
   }
 }
