@@ -3,20 +3,20 @@ import 'package:wubba_lubba/app/domain/domain.dart';
 import 'package:wubba_lubba/app/presentation/presentation.dart';
 
 class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
-  final GetAllCharactersUseCase getAllUseCase;
-  final GetCharacterUseCase getCharacterUseCase;
-  final RefreshSearchUseCase refreshSearchUseCase;
-  final SearchCharactersUseCase searchCharactersUseCase;
+  final GetAllCharactersUseCase getAllCharacters;
+  final GetCharacterUseCase getCharacter;
+  final RefreshSearchUseCase refreshSearch;
+  final SearchCharactersUseCase searchCharacters;
 
   CharactersBloc({
-    required this.getAllUseCase,
-    required this.getCharacterUseCase,
-    required this.refreshSearchUseCase,
-    required this.searchCharactersUseCase,
+    required this.getAllCharacters,
+    required this.getCharacter,
+    required this.refreshSearch,
+    required this.searchCharacters,
   }) : super(CharactersInitial()) {
     on<LoadCharacters>(_onLoadCharacters);
     on<RefreshCharacters>(_onRefresh);
-    on<SearchCharacters>(_onSearch);
+    on<SearchCharacters>(_onSearchCharacter);
     on<LoadCharacterById>(_onLoadCharacterById);
   }
 
@@ -26,7 +26,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
   ) async {
     emit(CharactersLoading());
     try {
-      final listCharacters = await getAllUseCase();
+      final listCharacters = await getAllCharacters();
       if (listCharacters.isEmpty) {
         emit(CharactersEmpty());
       } else {
@@ -43,8 +43,8 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
   ) async {
     emit(CharactersLoading());
     try {
-      await refreshSearchUseCase();
-      final list = await getAllUseCase();
+      await refreshSearch();
+      final list = await getAllCharacters();
       if (list.isEmpty) {
         emit(CharactersEmpty());
       } else {
@@ -55,13 +55,13 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     }
   }
 
-  Future _onSearch(
+  Future _onSearchCharacter(
     SearchCharacters event,
     Emitter<CharactersState> emit,
   ) async {
     emit(CharactersLoading());
     try {
-      final results = await searchCharactersUseCase(event.query);
+      final results = await searchCharacters(event.query);
       if (results.isEmpty) {
         emit(CharactersEmpty());
       } else {
@@ -78,7 +78,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
   ) async {
     emit(CharactersLoading());
     try {
-      final character = await getCharacterUseCase(event.id);
+      final character = await getCharacter(event.id);
       if (character == null) {
         emit(CharactersEmpty());
       } else {
