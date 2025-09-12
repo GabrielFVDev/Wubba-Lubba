@@ -9,4 +9,6 @@ class GetAllCharactersUseCase {
   Future<List<CharacterEntity>> getAllCharacters() {
     return repository.getAllCharacters();
   }
+
+  Future<List<CharacterEntity>> call() => getAllCharacters();
 }

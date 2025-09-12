@@ -8,4 +8,6 @@ class SearchCharactersUseCase {
   Future<List<CharacterEntity>> searchCharacters(String query) {
     return repository.searchCharacters(query);
   }
+
+  Future<List<CharacterEntity>> call(String query) => searchCharacters(query);
 }

@@ -8,4 +8,6 @@ class RefreshSearchUseCase {
   Future refresh() {
     return repository.refreshSearch();
   }
+
+  Future call() => refresh();
 }

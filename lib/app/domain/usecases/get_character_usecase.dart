@@ -8,4 +8,6 @@ class GetCharacterUseCase {
   Future<CharacterEntity?> getCharacterById(int id) {
     return repository.getCharacterById(id);
   }
+
+  Future<CharacterEntity?> call(int id) => getCharacterById(id);
 }
