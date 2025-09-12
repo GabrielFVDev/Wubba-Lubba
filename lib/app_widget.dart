@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:wubba_lubba/core/api_url.dart';
-import 'package:wubba_lubba/routes.dart';
+import 'package:wubba_lubba/core/routes.dart';
 import 'package:wubba_lubba/app/data/repositories/characters_repository_impl.dart';
 import 'package:wubba_lubba/app/domain/domain.dart';
 import 'package:wubba_lubba/app/presentation/presentation.dart';
