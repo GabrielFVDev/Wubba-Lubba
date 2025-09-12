@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wubba_lubba/app_widget.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
-    MultiProvider(
-      providers: [],
-      child: const MyApp(),
-    ),
+    const AppWidget(),
   );
 }

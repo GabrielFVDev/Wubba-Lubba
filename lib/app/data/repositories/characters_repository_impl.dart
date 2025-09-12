@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:wubba_lubba/app/data/models/character_model.dart';
 import 'package:wubba_lubba/app/domain/domain.dart';
+import 'package:wubba_lubba/core/api_url.dart';
 import 'package:wubba_lubba/shared/shared.dart';
 
 class CharactersRepositoryImpl implements CharacterRepository {
@@ -9,7 +10,7 @@ class CharactersRepositoryImpl implements CharacterRepository {
 
   CharactersRepositoryImpl({
     required this.client,
-    this.baseUrl = 'https://rickandmortyapi.com/api/character',
+    this.baseUrl = apiUrl,
   });
 
   @override
@@ -46,7 +47,7 @@ class CharactersRepositoryImpl implements CharacterRepository {
 
     // Se a query contém '&' ou '=', trata como query string completa
     if (query.contains('&') || query.contains('=')) {
-      // Parse manual da query string: "name=rick&status=alive"
+      // Parse manual da query string: "name=rick"
       final pairs = query.split('&');
       for (final pair in pairs) {
         final keyValue = pair.split('=');
