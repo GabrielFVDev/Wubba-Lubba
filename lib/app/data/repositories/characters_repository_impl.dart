@@ -20,7 +20,7 @@ class CharactersRepositoryImpl implements CharacterRepository {
   // https://rickandmortyapi.com/api/character
   @override
   Future<List<CharacterEntity>> getAllCharacters() async {
-    final resp = await client.get(baseUrl);
+    final resp = await client.get('$baseUrl/character');
     final data = resp.data;
     if (data == null || data['results'] == null) return [];
     final list = (data['results'] as List)
@@ -33,7 +33,7 @@ class CharactersRepositoryImpl implements CharacterRepository {
   // https://rickandmortyapi.com/api/character/2
   @override
   Future<CharacterEntity> getCharacterById(int id) async {
-    final resp = await client.get('$baseUrl/$id');
+    final resp = await client.get('$baseUrl/character/$id');
     final data = resp.data as Map<String, dynamic>;
     final model = CharacterModel.fromJson(data);
     return model.toEntity();
@@ -61,7 +61,10 @@ class CharactersRepositoryImpl implements CharacterRepository {
     }
 
     try {
-      final resp = await client.get(baseUrl, queryParameters: queryParams);
+      final resp = await client.get(
+        '$baseUrl/character',
+        queryParameters: queryParams,
+      );
       final data = resp.data;
 
       if (data == null || data['results'] == null) return [];

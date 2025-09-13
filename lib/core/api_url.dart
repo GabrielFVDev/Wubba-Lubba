@@ -1,1 +1,1 @@
-const apiUrl = "https://rickandmortyapi.com/api/";
+const apiUrl = "https://rickandmortyapi.com/api";

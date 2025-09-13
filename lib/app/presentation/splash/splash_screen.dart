@@ -164,7 +164,7 @@ class _SplashScreenState extends State<SplashScreen>
     _wubbaController.forward();
 
     // Navigate after all animations
-    await Future.delayed(const Duration(milliseconds: 2500));
+    await Future.delayed(const Duration(milliseconds: 3500));
     if (mounted) {
       context.go('/home');
     }
