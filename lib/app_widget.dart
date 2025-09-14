@@ -12,7 +12,6 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // DI Manual - Clean Architecture correta
     final dio = Dio(BaseOptions(baseUrl: apiUrl));
     final remoteDataSource = CharacterRemoteDataSourceImpl(client: dio);
     final repository = CharactersRepositoryImpl(
