@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wubba_lubba/app/presentation/presentation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wubba_lubba/app/domain/domain.dart';
+import 'package:wubba_lubba/app/presentation/widgets/app_bar/custom_app_bar_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -53,14 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0D1421),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text(
-          'Wubba Lubba',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: Color(0xFF0D1421),
+      appBar: CustomAppBarWidget(
+        text: 'Wubba Lubba',
+        onPressed: null,
       ),
       body: SafeArea(
         child: RefreshIndicator(
