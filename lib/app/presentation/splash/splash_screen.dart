@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:just_audio/just_audio.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,38 +12,24 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _portalController;
-  late AnimationController _textController;
-  late AnimationController _wubbaController;
   late AnimationController _particlesController;
 
-  late Animation<double> _portalRotation;
   late Animation<double> _portalScale;
   late Animation<double> _portalOpacity;
-  late Animation<double> _textFade;
-  late Animation<double> _textScale;
-  late Animation<Offset> _wubbaSlide;
-  late Animation<double> _wubbaOpacity;
+  late Animation<double> _portalRotation;
   late Animation<double> _particlesRotation;
+
+  late AudioPlayer _audioPlayer;
 
   @override
   void initState() {
     super.initState();
 
-    // Portal animation
+    _audioPlayer = AudioPlayer();
+
+    // Portal animation (2 seconds to sync with audio)
     _portalController = AnimationController(
       duration: const Duration(milliseconds: 2000),
-      vsync: this,
-    );
-
-    // Text animation
-    _textController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    );
-
-    // Wubba Lubba animation
-    _wubbaController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
 
@@ -58,17 +45,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _initAnimations() {
     // Portal animations
-    _portalRotation =
-        Tween<double>(
-          begin: 0.0,
-          end: 2.0,
-        ).animate(
-          CurvedAnimation(
-            parent: _portalController,
-            curve: Curves.easeInOut,
-          ),
-        );
-
     _portalScale =
         Tween<double>(
           begin: 0.0,
@@ -76,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen>
         ).animate(
           CurvedAnimation(
             parent: _portalController,
-            curve: const Interval(0.0, 0.6, curve: Curves.elasticOut),
+            curve: Curves.elasticOut,
           ),
         );
 
@@ -91,49 +67,14 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         );
 
-    // Text animations
-    _textFade =
+    _portalRotation =
         Tween<double>(
           begin: 0.0,
-          end: 1.0,
+          end: 2.0,
         ).animate(
           CurvedAnimation(
-            parent: _textController,
-            curve: const Interval(0.3, 0.8, curve: Curves.easeInOut),
-          ),
-        );
-
-    _textScale =
-        Tween<double>(
-          begin: 0.8,
-          end: 1.0,
-        ).animate(
-          CurvedAnimation(
-            parent: _textController,
-            curve: const Interval(0.3, 0.8, curve: Curves.elasticOut),
-          ),
-        );
-
-    // Wubba Lubba animations
-    _wubbaSlide =
-        Tween<Offset>(
-          begin: const Offset(0, 1),
-          end: Offset.zero,
-        ).animate(
-          CurvedAnimation(
-            parent: _wubbaController,
-            curve: Curves.bounceOut,
-          ),
-        );
-
-    _wubbaOpacity =
-        Tween<double>(
-          begin: 0.0,
-          end: 1.0,
-        ).animate(
-          CurvedAnimation(
-            parent: _wubbaController,
-            curve: Curves.easeIn,
+            parent: _portalController,
+            curve: Curves.easeInOut,
           ),
         );
 
@@ -151,31 +92,39 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _startAnimationSequence() async {
-    // Start portal animation
-    await Future.delayed(const Duration(milliseconds: 500));
-    _portalController.forward();
+    try {
+      // Preload audio
+      await _audioPlayer.setAsset('assets/sounds/splash.mp3');
 
-    // Start text animation
-    await Future.delayed(const Duration(milliseconds: 800));
-    _textController.forward();
+      // Small delay before starting
+      await Future.delayed(const Duration(milliseconds: 500));
 
-    // Start wubba lubba animation
-    await Future.delayed(const Duration(milliseconds: 1200));
-    _wubbaController.forward();
+      // Start portal animation and audio simultaneously (2 seconds each)
+      _portalController.forward();
+      await _audioPlayer.play();
 
-    // Navigate after all animations
-    await Future.delayed(const Duration(milliseconds: 3500));
-    if (mounted) {
-      context.go('/home');
+      // Navigate after animation completes
+      await Future.delayed(const Duration(milliseconds: 2500));
+      if (mounted) {
+        context.go('/home');
+      }
+    } catch (e) {
+      // If audio fails, continue with animation only
+      debugPrint('Audio error: $e');
+      await Future.delayed(const Duration(milliseconds: 500));
+      _portalController.forward();
+      await Future.delayed(const Duration(milliseconds: 2500));
+      if (mounted) {
+        context.go('/home');
+      }
     }
   }
 
   @override
   void dispose() {
     _portalController.dispose();
-    _textController.dispose();
-    _wubbaController.dispose();
     _particlesController.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -236,7 +185,7 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Portal animation
+                // Portal image animation
                 AnimatedBuilder(
                   animation: _portalController,
                   builder: (context, child) {
@@ -247,17 +196,10 @@ class _SplashScreenState extends State<SplashScreen>
                         child: Transform.rotate(
                           angle: _portalRotation.value * 3.14159,
                           child: Container(
-                            width: 150,
-                            height: 150,
+                            width: 200,
+                            height: 200,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              gradient: const RadialGradient(
-                                colors: [
-                                  Color(0xFF00D4AA), // Portal green
-                                  Color(0xFF008B8B),
-                                  Color(0xFF004D4D),
-                                ],
-                              ),
                               boxShadow: [
                                 BoxShadow(
                                   color: const Color(
@@ -268,116 +210,34 @@ class _SplashScreenState extends State<SplashScreen>
                                 ),
                               ],
                             ),
-                            child: Stack(
-                              children: [
-                                // Inner rings
-                                ...List.generate(3, (index) {
-                                  return Center(
-                                    child: Container(
-                                      width: 120 - (index * 30),
-                                      height: 120 - (index * 30),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: const Color(
-                                            0xFF00D4AA,
-                                          ).withOpacity(0.7 - (index * 0.2)),
-                                          width: 2,
-                                        ),
+                            child: ClipOval(
+                              child: Image.asset(
+                                'assets/images/portal.png',
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  // Fallback if image doesn't exist
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      gradient: const RadialGradient(
+                                        colors: [
+                                          Color(0xFF00D4AA),
+                                          Color(0xFF008B8B),
+                                          Color(0xFF004D4D),
+                                        ],
+                                      ),
+                                    ),
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.science,
+                                        size: 80,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   );
-                                }),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-
-                const SizedBox(height: 40),
-
-                // Rick and Morty text
-                AnimatedBuilder(
-                  animation: _textController,
-                  builder: (context, child) {
-                    return Opacity(
-                      opacity: _textFade.value,
-                      child: Transform.scale(
-                        scale: _textScale.value,
-                        child: Column(
-                          children: [
-                            Text(
-                              'RICK',
-                              style: TextStyle(
-                                fontSize: 48,
-                                fontWeight: FontWeight.bold,
-                                color: const Color(0xFF00D4AA),
-                                letterSpacing: 4,
-                                shadows: [
-                                  Shadow(
-                                    color: const Color(
-                                      0xFF00D4AA,
-                                    ).withOpacity(0.5),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 0),
-                                  ),
-                                ],
+                                },
                               ),
                             ),
-                            Text(
-                              '&',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w300,
-                                color: const Color(0xFFFFD700), // Yellow
-                                letterSpacing: 2,
-                              ),
-                            ),
-                            Text(
-                              'MORTY',
-                              style: TextStyle(
-                                fontSize: 48,
-                                fontWeight: FontWeight.bold,
-                                color: const Color(0xFF4169E1), // Royal blue
-                                letterSpacing: 4,
-                                shadows: [
-                                  Shadow(
-                                    color: const Color(
-                                      0xFF4169E1,
-                                    ).withOpacity(0.5),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 0),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-
-                const SizedBox(height: 20),
-
-                // Wubba Lubba Dub Dub
-                AnimatedBuilder(
-                  animation: _wubbaController,
-                  builder: (context, child) {
-                    return SlideTransition(
-                      position: _wubbaSlide,
-                      child: Opacity(
-                        opacity: _wubbaOpacity.value,
-                        child: Text(
-                          'Wubba Lubba Dub Dub!',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontStyle: FontStyle.italic,
-                            color: const Color(0xFFFFD700).withOpacity(0.8),
-                            letterSpacing: 1.5,
                           ),
                         ),
                       ),
@@ -385,38 +245,6 @@ class _SplashScreenState extends State<SplashScreen>
                   },
                 ),
               ],
-            ),
-          ),
-
-          // Loading indicator
-          Positioned(
-            bottom: 80,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: 30,
-                    height: 30,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        const Color(0xFF00D4AA),
-                      ),
-                      strokeWidth: 3,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Loading multiverse...',
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.7),
-                      fontSize: 14,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
         ],
