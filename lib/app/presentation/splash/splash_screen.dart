@@ -27,13 +27,11 @@ class _SplashScreenState extends State<SplashScreen>
 
     _audioPlayer = AudioPlayer();
 
-    // Portal animation (2 seconds to sync with audio)
     _portalController = AnimationController(
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
 
-    // Particles animation
     _particlesController = AnimationController(
       duration: const Duration(milliseconds: 3000),
       vsync: this,
@@ -44,7 +42,6 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _initAnimations() {
-    // Portal animations
     _portalScale =
         Tween<double>(
           begin: 0.0,
@@ -78,7 +75,6 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         );
 
-    // Particles animation
     _particlesRotation =
         Tween<double>(
           begin: 0.0,
@@ -93,23 +89,18 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _startAnimationSequence() async {
     try {
-      // Preload audio
-      await _audioPlayer.setAsset('assets/sounds/splash.mp3');
+      await _audioPlayer.setAsset('assets/sounds/pistol_sound.mp3');
 
-      // Small delay before starting
       await Future.delayed(const Duration(milliseconds: 500));
 
-      // Start portal animation and audio simultaneously (2 seconds each)
       _portalController.forward();
-      await _audioPlayer.play();
+      _audioPlayer.play();
 
-      // Navigate after animation completes
       await Future.delayed(const Duration(milliseconds: 2500));
       if (mounted) {
         context.go('/home');
       }
     } catch (e) {
-      // If audio fails, continue with animation only
       debugPrint('Audio error: $e');
       await Future.delayed(const Duration(milliseconds: 500));
       _portalController.forward();
@@ -131,10 +122,9 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D1421), // Dark space blue
+      backgroundColor: const Color(0xFF0D1421),
       body: Stack(
         children: [
-          // Animated background particles
           ...List.generate(15, (index) {
             return AnimatedBuilder(
               animation: _particlesController,
@@ -180,12 +170,10 @@ class _SplashScreenState extends State<SplashScreen>
             );
           }),
 
-          // Main content
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Portal image animation
                 AnimatedBuilder(
                   animation: _portalController,
                   builder: (context, child) {
@@ -204,7 +192,7 @@ class _SplashScreenState extends State<SplashScreen>
                                 BoxShadow(
                                   color: const Color(
                                     0xFF00D4AA,
-                                  ).withOpacity(0.5),
+                                  ).withAlpha(5),
                                   blurRadius: 30,
                                   spreadRadius: 10,
                                 ),
@@ -215,7 +203,6 @@ class _SplashScreenState extends State<SplashScreen>
                                 'assets/images/portal.png',
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
-                                  // Fallback if image doesn't exist
                                   return Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
