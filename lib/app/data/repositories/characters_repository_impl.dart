@@ -1,4 +1,3 @@
-import 'package:wubba_lubba/app/domain/datasources/character_remote_datasource.dart';
 import 'package:wubba_lubba/app/domain/domain.dart';
 import 'package:wubba_lubba/shared/shared.dart';
 
