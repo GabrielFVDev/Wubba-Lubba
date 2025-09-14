@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
 
+  // TODO alterar a tela e criar os componentes
   @override
   void initState() {
     super.initState();
@@ -47,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Wubba Lubba'),
         centerTitle: true,
         backgroundColor: const Color(0xFF0D1421),
@@ -122,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context.read<CharactersBloc>().add(
                           LoadCharacterById(c.id),
                         );
-                        context.go('/details/${c.id}');
+                        context.push('/details/${c.id}');
                       },
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 12,
