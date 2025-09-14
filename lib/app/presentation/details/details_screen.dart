@@ -19,7 +19,11 @@ class DetailsScreen extends StatelessWidget {
         title: const Text('Character details'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go('/home'),
+          onPressed: () {
+            // Recarrega a lista quando volta para home
+            context.read<CharactersBloc>().add(LoadCharacters());
+            context.go('/home');
+          },
         ),
       ),
       backgroundColor: const Color(0xFF0D1421),

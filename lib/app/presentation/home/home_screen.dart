@@ -161,56 +161,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }
 
-              if (state is CharacterLoaded) {
-                final c = state.character;
-                return ListTile(
-                  onTap: () {
-                    // Load details and navigate to details screen if exists
-                    context.read<CharactersBloc>().add(
-                      LoadCharacterById(c.id),
-                    );
-                    context.go('/details/${c.id}');
-                  },
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  tileColor: Colors.white.withOpacity(0.04),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      c.image,
-                      width: 56,
-                      height: 56,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
-                        width: 56,
-                        height: 56,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                  title: Text(
-                    c.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  subtitle: Text(
-                    '${c.species} • ${c.status}',
-                    style: const TextStyle(color: Colors.white70),
-                  ),
-                  trailing: const Icon(
-                    Icons.chevron_right,
-                    color: Colors.white70,
-                  ),
-                );
-              }
-
               return const SizedBox.shrink();
             },
           ),

@@ -79,10 +79,10 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     emit(CharactersLoading());
     try {
       final character = await getCharacter(event.id);
-      if (character == null) {
-        emit(CharactersEmpty());
-      } else {
+      if (character != null) {
         emit(CharacterLoaded(character));
+      } else {
+        emit(CharactersError('Character not found'));
       }
     } catch (e) {
       emit(CharactersError(e.toString()));

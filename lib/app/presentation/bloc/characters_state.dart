@@ -21,15 +21,6 @@ class CharactersError extends CharactersState {
 
 class CharactersLoading extends CharactersState {}
 
-class CharacterLoaded extends CharactersState {
-  final CharacterEntity character;
-
-  CharacterLoaded(this.character);
-
-  @override
-  List<Object?> get props => [character];
-}
-
 class CharactersLoaded extends CharactersState {
   final List<CharacterEntity> characters;
 
@@ -37,4 +28,13 @@ class CharactersLoaded extends CharactersState {
 
   @override
   List<Object?> get props => [characters];
+}
+
+class CharacterLoaded extends CharactersState {
+  final CharacterEntity character;
+
+  CharacterLoaded(this.character);
+
+  @override
+  List<Object?> get props => [character];
 }
