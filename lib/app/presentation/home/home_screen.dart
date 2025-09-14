@@ -44,45 +44,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _onClearSearch() {
+    _searchController.clear();
+    _onSearch('');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF0D1421),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Wubba Lubba'),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF0D1421),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(56),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: TextField(
-              controller: _searchController,
-              onSubmitted: _onSearch,
-              textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
-                hintText: 'Search characters...',
-                fillColor: Colors.white.withOpacity(0.06),
-                filled: true,
-                prefixIcon: const Icon(Icons.search, color: Colors.white70),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.clear, color: Colors.white70),
-                  onPressed: () {
-                    _searchController.clear();
-                    _onSearch('');
-                  },
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
+        title: const Text(
+          'Wubba Lubba',
+          style: TextStyle(color: Colors.white),
         ),
+        centerTitle: true,
+        backgroundColor: Color(0xFF0D1421),
       ),
-      backgroundColor: const Color(0xFF0D1421),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: _onRefresh,
@@ -112,59 +91,73 @@ class _HomeScreenState extends State<HomeScreen> {
 
               if (state is CharactersLoaded) {
                 final characters = state.characters;
-                return ListView.separated(
-                  padding: const EdgeInsets.all(12),
-                  itemCount: characters.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 8),
-                  itemBuilder: (context, index) {
-                    final CharacterEntity c = characters[index];
-                    return ListTile(
-                      onTap: () {
-                        // Load details and navigate to details screen if exists
-                        context.read<CharactersBloc>().add(
-                          LoadCharacterById(c.id),
-                        );
-                        context.push('/details/${c.id}');
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
+                return Column(
+                  children: [
+                    // Search TextField - only shown when characters are loaded
+                    SearchTextFormWidget(
+                      controller: _searchController,
+                      onSubmitted: _onSearch,
+                      onClear: _onClearSearch,
+                      hintText: 'Search characters...',
+                    ),
+                    // Characters List
+                    Expanded(
+                      child: ListView.separated(
+                        padding: const EdgeInsets.all(12),
+                        itemCount: characters.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 8),
+                        itemBuilder: (context, index) {
+                          final CharacterEntity c = characters[index];
+                          return ListTile(
+                            onTap: () {
+                              // Load details and navigate to details screen if exists
+                              context.read<CharactersBloc>().add(
+                                LoadCharacterById(c.id),
+                              );
+                              context.push('/details/${c.id}');
+                            },
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
+                            tileColor: Colors.white.withOpacity(0.04),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(
+                                c.image,
+                                width: 56,
+                                height: 56,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => Container(
+                                  width: 56,
+                                  height: 56,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              c.name,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            subtitle: Text(
+                              '${c.species} • ${c.status}',
+                              style: const TextStyle(color: Colors.white70),
+                            ),
+                            trailing: const Icon(
+                              Icons.chevron_right,
+                              color: Colors.white70,
+                            ),
+                          );
+                        },
                       ),
-                      tileColor: Colors.white.withOpacity(0.04),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.network(
-                          c.image,
-                          width: 56,
-                          height: 56,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => Container(
-                            width: 56,
-                            height: 56,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                      title: Text(
-                        c.name,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      subtitle: Text(
-                        '${c.species} • ${c.status}',
-                        style: const TextStyle(color: Colors.white70),
-                      ),
-                      trailing: const Icon(
-                        Icons.chevron_right,
-                        color: Colors.white70,
-                      ),
-                    );
-                  },
+                    ),
+                  ],
                 );
               }
 
@@ -173,7 +166,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 return ListTile(
                   onTap: () {
                     // Load details and navigate to details screen if exists
-                    context.read<CharactersBloc>().add(LoadCharacterById(c.id));
+                    context.read<CharactersBloc>().add(
+                      LoadCharacterById(c.id),
+                    );
                     context.go('/details/${c.id}');
                   },
                   contentPadding: const EdgeInsets.symmetric(
