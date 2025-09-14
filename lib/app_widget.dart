@@ -16,51 +16,39 @@ class AppWidget extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<Dio>(
-          create: (_) => Dio(
-            BaseOptions(
-              baseUrl: apiUrl,
-            ),
-          ),
+          create: (_) => Dio(BaseOptions(baseUrl: apiUrl)),
+          dispose: (_, dio) => dio.close(),
         ),
         ProxyProvider<Dio, CharacterRepository>(
-          update: (_, dio, __) => CharactersRepositoryImpl(client: dio),
+          update: (_, dio, previous) =>
+              previous ?? CharactersRepositoryImpl(client: dio),
         ),
         ProxyProvider<CharacterRepository, GetAllCharactersUseCase>(
-          update: (_, repo, __) => GetAllCharactersUseCase(repo),
+          update: (_, repo, previous) =>
+              previous ?? GetAllCharactersUseCase(repo),
         ),
         ProxyProvider<CharacterRepository, GetCharacterUseCase>(
-          update: (_, repo, __) => GetCharacterUseCase(repo),
+          update: (_, repo, previous) => previous ?? GetCharacterUseCase(repo),
         ),
         ProxyProvider<CharacterRepository, SearchCharactersUseCase>(
-          update: (_, repo, __) => SearchCharactersUseCase(repo),
+          update: (_, repo, previous) =>
+              previous ?? SearchCharactersUseCase(repo),
         ),
         ProxyProvider<CharacterRepository, RefreshSearchUseCase>(
-          update: (_, repo, __) => RefreshSearchUseCase(repo),
+          update: (_, repo, previous) => previous ?? RefreshSearchUseCase(repo),
+        ),
+        BlocProvider<CharactersBloc>(
+          create: (context) => CharactersBloc(
+            getAllCharacters: context.read<GetAllCharactersUseCase>(),
+            getCharacter: context.read<GetCharacterUseCase>(),
+            refreshSearch: context.read<RefreshSearchUseCase>(),
+            searchCharacters: context.read<SearchCharactersUseCase>(),
+          )..add(LoadCharacters()),
         ),
       ],
-      child: Builder(
-        builder: (context) {
-          final getAll = context.read<GetAllCharactersUseCase>();
-          final getCharacter = context.read<GetCharacterUseCase>();
-          final refresh = context.read<RefreshSearchUseCase>();
-          final search = context.read<SearchCharactersUseCase>();
-
-          return BlocProvider<CharactersBloc>(
-            create: (_) => CharactersBloc(
-              getAllCharacters: getAll,
-              getCharacter: getCharacter,
-              refreshSearch: refresh,
-              searchCharacters: search,
-            )..add(LoadCharacters()),
-            child: MaterialApp.router(
-              title: 'Wubba Lubba',
-              theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-              ),
-              routerConfig: router,
-            ),
-          );
-        },
+      child: MaterialApp.router(
+        title: 'Wubba Lubba',
+        routerConfig: router,
       ),
     );
   }
