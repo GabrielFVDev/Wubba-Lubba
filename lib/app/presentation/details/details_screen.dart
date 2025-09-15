@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wubba_lubba/app/presentation/presentation.dart';
 import 'package:wubba_lubba/app/presentation/widgets/app_bar/custom_app_bar_widget.dart';
+import 'package:wubba_lubba/app/presentation/widgets/chips/status_chip_widget.dart';
+import 'package:wubba_lubba/app/presentation/widgets/cards/info_card_widget.dart';
+import 'package:wubba_lubba/app/presentation/widgets/titles/section_title_widget.dart';
+import 'package:wubba_lubba/app/presentation/widgets/cards/location_card_widget.dart';
 
 class DetailsScreen extends StatelessWidget {
   final int characterId;
@@ -110,7 +114,7 @@ class DetailsScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              _buildStatusChip(c.status),
+                              StatusChipWidget(status: c.status),
                             ],
                           ),
                         ),
@@ -127,20 +131,20 @@ class DetailsScreen extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: _buildInfoCard(
-                                  'Species',
-                                  c.species,
-                                  Icons.pets,
-                                  Colors.green,
+                                child: InfoCardWidget(
+                                  title: 'Species',
+                                  value: c.species,
+                                  icon: Icons.pets,
+                                  color: Colors.green,
                                 ),
                               ),
                               const SizedBox(width: 16),
                               Expanded(
-                                child: _buildInfoCard(
-                                  'Gender',
-                                  c.gender,
-                                  Icons.person,
-                                  Colors.blue,
+                                child: InfoCardWidget(
+                                  title: 'Gender',
+                                  value: c.gender,
+                                  icon: Icons.person,
+                                  color: Colors.blue,
                                 ),
                               ),
                             ],
@@ -149,29 +153,29 @@ class DetailsScreen extends StatelessWidget {
                           const SizedBox(height: 24),
 
                           // Location Info
-                          _buildSectionTitle('Location & Origin'),
+                          SectionTitleWidget(title: 'Location & Origin'),
                           const SizedBox(height: 12),
 
-                          _buildLocationCard(
-                            'Origin',
-                            c.origin['name'] ?? 'Unknown',
-                            Icons.home,
-                            Colors.orange,
+                          LocationCardWidget(
+                            title: 'Origin',
+                            location: c.origin['name'] ?? 'Unknown',
+                            icon: Icons.home,
+                            color: Colors.orange,
                           ),
 
                           const SizedBox(height: 12),
 
-                          _buildLocationCard(
-                            'Current Location',
-                            c.location['name'] ?? 'Unknown',
-                            Icons.location_on,
-                            Colors.red,
+                          LocationCardWidget(
+                            title: 'Current Location',
+                            location: c.location['name'] ?? 'Unknown',
+                            icon: Icons.location_on,
+                            color: Colors.red,
                           ),
 
                           const SizedBox(height: 24),
 
                           // Episodes Section
-                          _buildSectionTitle('Episodes'),
+                          SectionTitleWidget(title: 'Episodes'),
                           const SizedBox(height: 12),
 
                           Container(
@@ -224,161 +228,6 @@ class DetailsScreen extends StatelessWidget {
             return const SizedBox.shrink();
           },
         ),
-      ),
-    );
-  }
-
-  Widget _buildStatusChip(String status) {
-    Color chipColor;
-    IconData icon;
-
-    switch (status.toLowerCase()) {
-      case 'alive':
-        chipColor = Colors.green;
-        icon = Icons.favorite;
-        break;
-      case 'dead':
-        chipColor = Colors.red;
-        icon = Icons.heart_broken;
-        break;
-      default:
-        chipColor = Colors.orange;
-        icon = Icons.help_outline;
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: chipColor.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: chipColor, width: 1),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: chipColor, size: 16),
-          const SizedBox(width: 6),
-          Text(
-            status,
-            style: TextStyle(
-              color: chipColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInfoCard(
-    String title,
-    String value,
-    IconData icon,
-    Color color,
-  ) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: color.withOpacity(0.3),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(icon, color: color, size: 20),
-              const SizedBox(width: 8),
-              Text(
-                title,
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.7),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
-
-  Widget _buildLocationCard(
-    String title,
-    String location,
-    IconData icon,
-    Color color,
-  ) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.1),
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(icon, color: color, size: 20),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.7),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  location,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
