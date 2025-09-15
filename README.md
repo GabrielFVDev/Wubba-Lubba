@@ -209,8 +209,6 @@ flutter test --coverage
 
 **Gabriel F. V.**
 
-- 📧 Email: [seu-email@exemplo.com]
-- 💼 LinkedIn: [seu-linkedin]
 - 🐙 GitHub: [@GabrielFVDev](https://github.com/GabrielFVDev)
 
 ---
