@@ -116,77 +116,6 @@ lib/
 | **Áudio**                   | `just_audio`   | ✅ Controle preciso de reprodução<br>✅ Suporte multiplataforma<br>✅ Boa performance                |
 | **Comparação**              | `equatable`    | ✅ Evita rebuilds desnecessários<br>✅ Facilita comparação de estados<br>✅ Melhora performance BLoC |
 
-### 🎨 Decisões de Design e UX
-
-#### **Interface do Usuário**
-
-- **Tema Dark**:
-
-  - ✅ Inspirado no universo sci-fi de Rick and Morty
-  - ✅ Menos cansativo para os olhos
-  - ✅ Destaca melhor as cores dos status dos personagens
-
-- **Cores Temáticas por Status**:
-  - 🟢 **Verde** (Alive): Transmite vida e energia
-  - 🔴 **Vermelho** (Dead): Indica claramente o status
-  - 🟠 **Laranja** (Unknown): Neutro para status indefinido
-
-#### **Animações e Transições**
-
-```dart
-// Por que implementar animações customizadas?
-// ✅ Melhora a percepção de qualidade do app
-// ✅ Feedback visual para ações do usuário
-// ✅ Torna a navegação mais fluida e intuitiva
-
-CustomTransitionPage(
-  child: HomeScreen(),
-  transitionsBuilder: (context, animation, secondaryAnimation, child) {
-    return SlideTransition(/* Animação suave de slide */);
-  },
-)
-```
-
-#### **Componentização**
-
-- **Widgets Reutilizáveis**:
-  - ✅ `CharacterCardWidget`: Consistência visual em toda lista
-  - ✅ `StatusChipWidget`: Padronização de status
-  - ✅ `CustomAppBarWidget`: AppBar personalizada reutilizável
-  - ✅ `InfoCardWidget`: Cards de informação uniformes
-
-**Por que componentizar?**
-
-- ✅ **DRY (Don't Repeat Yourself)**: Evita duplicação de código
-- ✅ **Consistência**: Mesmo design em todo o app
-- ✅ **Manutenção**: Mudanças centralizadas em um lugar
-- ✅ **Testabilidade**: Testa componentes isoladamente
-
-### 🔧 Tratamento de Erros
-
-#### **Estratégia Simples e Eficaz**
-
-```dart
-// Por que essa abordagem?
-// ✅ Mensagens amigáveis ao usuário
-// ✅ Diferenciação de tipos de erro
-// ✅ Ações de recovery (Retry)
-
-String _getErrorMessage(dynamic error) {
-  if (errorString.contains('network')) return 'Sem conexão com a internet';
-  if (errorString.contains('timeout')) return 'Conexão demorou muito';
-  if (errorString.contains('server')) return 'Erro no servidor';
-  return 'Algo deu errado. Tente novamente';
-}
-```
-
-#### **User Experience de Erro**
-
-- ✅ **SnackBar com ação**: Permite retry imediato
-- ✅ **Botões de retry**: Na tela de erro principal
-- ✅ **Estados específicos**: Loading, Empty, Error bem definidos
-- ✅ **Feedback visual**: Usuário sempre sabe o que está acontecendo
-
 ### 📱 Responsividade e Performance
 
 #### **Decisões de Performance**
@@ -230,38 +159,13 @@ API → Repository → Use Cases → BLoC → UI
 
 ---
 
-## 🧪 Testes
-
-### Executar Testes
-
-```bash
-# Todos os testes
-flutter test
-
-# Testes com coverage
-flutter test --coverage
-```
-
-### Cobertura de Testes
-
-- ✅ Unit Tests (Use Cases, Repository)
-- ✅ Widget Tests (Componentes UI)
-- ✅ Integration Tests (Fluxos principais)
-
----
-
 ## 📋 Funcionalidades Implementadas
-
-### ✅ Requisitos Obrigatórios
 
 - [x] Lista de personagens com nome, imagem e status
 - [x] Tela de detalhes com informações do personagem
 - [x] Navegação entre telas
 - [x] Clean Architecture
 - [x] Consumo da Rick and Morty API
-
-### 🚀 Extras Implementados
-
 - [x] Splash screen com animação
 - [x] Busca em tempo real
 - [x] Pull to refresh
@@ -281,7 +185,6 @@ flutter test --coverage
 - [ ] 🌐 Paginação infinita
 - [ ] 🎨 Temas customizáveis
 - [ ] 🔊 Mais efeitos sonoros temáticos
-- [ ] 📊 Analytics e crashlytics
 
 ---
 
