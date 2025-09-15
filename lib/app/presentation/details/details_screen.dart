@@ -13,15 +13,13 @@ class DetailsScreen extends StatelessWidget {
 
   const DetailsScreen({super.key, required this.characterId});
 
-  // TODO alterar a tela depois
   @override
   Widget build(BuildContext context) {
-    // Ensure the bloc loads the character (safe to call even if already loaded)
     context.read<CharactersBloc>().add(LoadCharacterById(characterId));
 
     return Scaffold(
       appBar: CustomAppBarWidget(
-        text: 'teste',
+        text: 'Detalhes',
         onPressed: () {
           context.read<CharactersBloc>().add(LoadCharacters());
           context.go('/home');
@@ -45,14 +43,13 @@ class DetailsScreen extends StatelessWidget {
             }
 
             if (state is CharacterLoaded) {
-              final c = state.character;
+              final character = state.character;
               return SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Hero Image Section
                     Stack(
                       children: [
-                        // Background gradient overlay
                         Container(
                           height: 400,
                           decoration: BoxDecoration(
@@ -61,13 +58,13 @@ class DetailsScreen extends StatelessWidget {
                               end: Alignment.bottomCenter,
                               colors: [
                                 Colors.transparent,
-                                const Color(0xFF0D1421).withOpacity(0.8),
+                                const Color(0xFF0D1421).withAlpha(204),
                                 const Color(0xFF0D1421),
                               ],
                             ),
                           ),
                         ),
-                        // Character Image
+
                         Positioned.fill(
                           child: ClipRRect(
                             borderRadius: const BorderRadius.only(
@@ -75,7 +72,7 @@ class DetailsScreen extends StatelessWidget {
                               bottomRight: Radius.circular(30),
                             ),
                             child: Image.network(
-                              c.image,
+                              character.image,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
                                 return Container(
@@ -90,50 +87,42 @@ class DetailsScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // Character name overlay at bottom
-                        Positioned(
-                          bottom: 20,
-                          left: 20,
-                          right: 20,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                c.name,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                  shadows: [
-                                    Shadow(
-                                      offset: Offset(2, 2),
-                                      blurRadius: 4,
-                                      color: Colors.black54,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              StatusChipWidget(status: c.status),
-                            ],
-                          ),
-                        ),
                       ],
                     ),
 
-                    // Content Section
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            character.name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          StatusChipWidget(status: character.status),
+                        ],
+                      ),
+                    ),
+
                     Padding(
                       padding: const EdgeInsets.all(20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Quick Info Cards
                           Row(
                             children: [
                               Expanded(
                                 child: InfoCardWidget(
                                   title: 'Species',
-                                  value: c.species,
+                                  value: character.species,
                                   icon: Icons.pets,
                                   color: Colors.green,
                                 ),
@@ -142,7 +131,7 @@ class DetailsScreen extends StatelessWidget {
                               Expanded(
                                 child: InfoCardWidget(
                                   title: 'Gender',
-                                  value: c.gender,
+                                  value: character.gender,
                                   icon: Icons.person,
                                   color: Colors.blue,
                                 ),
@@ -152,13 +141,12 @@ class DetailsScreen extends StatelessWidget {
 
                           const SizedBox(height: 24),
 
-                          // Location Info
                           SectionTitleWidget(title: 'Location & Origin'),
                           const SizedBox(height: 12),
 
                           LocationCardWidget(
                             title: 'Origin',
-                            location: c.origin['name'] ?? 'Unknown',
+                            location: character.origin['name'] ?? 'Unknown',
                             icon: Icons.home,
                             color: Colors.orange,
                           ),
@@ -167,14 +155,13 @@ class DetailsScreen extends StatelessWidget {
 
                           LocationCardWidget(
                             title: 'Current Location',
-                            location: c.location['name'] ?? 'Unknown',
+                            location: character.location['name'] ?? 'Unknown',
                             icon: Icons.location_on,
                             color: Colors.red,
                           ),
 
                           const SizedBox(height: 24),
 
-                          // Episodes Section
                           SectionTitleWidget(title: 'Episodes'),
                           const SizedBox(height: 12),
 

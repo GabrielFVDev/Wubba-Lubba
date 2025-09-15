@@ -15,11 +15,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-  // TODO alterar a tela e criar os componentes
   @override
   void initState() {
     super.initState();
-    // Ensure characters are loaded when screen opens
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CharactersBloc>().add(LoadCharacters());
     });
@@ -31,11 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  Future<void> _onRefresh() async {
-    context.read<CharactersBloc>().add(RefreshCharacters());
-    // wait a bit for refresh to complete (bloc will emit states)
-    await Future.delayed(const Duration(milliseconds: 800));
-  }
+  Future<void> _onRefresh() async =>
+      context.read<CharactersBloc>().add(RefreshCharacters());
 
   void _onSearch(String query) {
     if (query.trim().isEmpty) {
@@ -55,8 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF0D1421),
       appBar: CustomAppBarWidget(
-        text: 'Wubba Lubba',
-        onPressed: null,
+        text: 'Galeria Interdimensional',
       ),
       body: SafeArea(
         child: RefreshIndicator(
@@ -111,14 +105,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 final characters = state.characters;
                 return Column(
                   children: [
-                    // Search TextField - only shown when characters are loaded
                     SearchTextFormWidget(
                       controller: _searchController,
                       onSubmitted: _onSearch,
                       onClear: _onClearSearch,
                       hintText: 'Search characters...',
                     ),
-                    // Characters List
+
                     Expanded(
                       child: ListView.separated(
                         padding: const EdgeInsets.all(12),
