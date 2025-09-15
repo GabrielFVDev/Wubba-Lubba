@@ -1,11 +1,11 @@
-# 🛸 Wubba Lubba Dub Dub! - Rick and Morty App
+# 🛸 Wubba Lubba Dub Dub!
 
 <p align="center">
   <img src="assets/images/portal.png" alt="Rick and Morty Portal" width="200"/>
 </p>
 
 <p align="center">
-  <strong>Aplicativo Flutter que explora o multiverso de Rick and Morty!</strong>
+  <strong>Aplicativo que explora o multiverso de Rick and Morty!</strong>
 </p>
 
 <p align="center">
