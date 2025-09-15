@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wubba_lubba/app/presentation/presentation.dart';
+import 'package:wubba_lubba/app/presentation/theme/app_colors.dart';
 import 'package:wubba_lubba/app/presentation/widgets/app_bar/custom_app_bar_widget.dart';
 import 'package:wubba_lubba/app/presentation/widgets/chips/status_chip_widget.dart';
 import 'package:wubba_lubba/app/presentation/widgets/cards/info_card_widget.dart';
@@ -37,7 +38,7 @@ class DetailsScreen extends StatelessWidget {
               return Center(
                 child: Text(
                   state.message,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: AppColors.textPrimary),
                 ),
               );
             }
@@ -80,7 +81,7 @@ class DetailsScreen extends StatelessWidget {
                                   child: const Icon(
                                     Icons.person,
                                     size: 100,
-                                    color: Colors.white54,
+                                    color: AppColors.textPrimary,
                                   ),
                                 );
                               },
@@ -101,7 +102,7 @@ class DetailsScreen extends StatelessWidget {
                           Text(
                             character.name,
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: AppColors.textPrimary,
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
                             ),
@@ -133,7 +134,7 @@ class DetailsScreen extends StatelessWidget {
                                   title: 'Gender',
                                   value: character.gender,
                                   icon: Icons.person,
-                                  color: Colors.blue,
+                                  color: AppColors.info,
                                 ),
                               ),
                             ],
@@ -148,7 +149,7 @@ class DetailsScreen extends StatelessWidget {
                             title: 'Origin',
                             location: character.origin['name'] ?? 'Unknown',
                             icon: Icons.home,
-                            color: Colors.orange,
+                            color: Colors.blue,
                           ),
 
                           const SizedBox(height: 12),
@@ -168,10 +169,10 @@ class DetailsScreen extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.05),
+                              color: AppColors.secondaryBackground,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.1),
+                                color: AppColors.textPrimary,
                               ),
                             ),
                             child: Row(
@@ -185,7 +186,7 @@ class DetailsScreen extends StatelessWidget {
                                 Text(
                                   'Appears in multiple episodes',
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    color: AppColors.textPrimary,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -207,7 +208,7 @@ class DetailsScreen extends StatelessWidget {
               return const Center(
                 child: Text(
                   'No character found',
-                  style: TextStyle(color: Colors.white70),
+                  style: TextStyle(color: AppColors.textPrimary),
                 ),
               );
             }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wubba_lubba/app/presentation/theme/app_colors.dart';
 
 class StatusChipWidget extends StatelessWidget {
   final String status;
@@ -11,11 +12,11 @@ class StatusChipWidget extends StatelessWidget {
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'alive':
-        return Colors.green;
+        return AppColors.statusAlive;
       case 'dead':
-        return Colors.red;
+        return AppColors.statusDead;
       default:
-        return Colors.orange;
+        return AppColors.statusUnknown;
     }
   }
 

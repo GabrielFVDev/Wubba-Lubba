@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wubba_lubba/app/domain/domain.dart';
 import 'package:wubba_lubba/app/presentation/presentation.dart';
+import 'package:wubba_lubba/app/presentation/theme/app_colors.dart';
 
 class CharacterCardWidget extends StatelessWidget {
   final CharacterEntity character;
@@ -15,11 +16,11 @@ class CharacterCardWidget extends StatelessWidget {
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'alive':
-        return Colors.green;
+        return AppColors.statusAlive;
       case 'dead':
-        return Colors.red;
+        return AppColors.statusDead;
       default:
-        return Colors.orange;
+        return AppColors.statusUnknown;
     }
   }
 
@@ -28,10 +29,10 @@ class CharacterCardWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white.withAlpha(05),
+        color: AppColors.textPrimary.withAlpha(05),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.white.withAlpha(1),
+          color: AppColors.textPrimary.withAlpha(1),
         ),
       ),
       child: InkWell(
@@ -62,7 +63,7 @@ class CharacterCardWidget extends StatelessWidget {
                       child: const Icon(
                         Icons.person,
                         size: 40,
-                        color: Colors.white54,
+                        color: AppColors.textPrimary,
                       ),
                     );
                   },
@@ -79,7 +80,7 @@ class CharacterCardWidget extends StatelessWidget {
                     Text(
                       character.name,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -92,7 +93,7 @@ class CharacterCardWidget extends StatelessWidget {
                     Text(
                       character.species,
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
+                        color: AppColors.textPrimary,
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),
@@ -128,7 +129,7 @@ class CharacterCardWidget extends StatelessWidget {
               // Arrow Icon
               Icon(
                 Icons.arrow_forward_ios,
-                color: Colors.white.withOpacity(0.5),
+                color: AppColors.textPrimary,
                 size: 16,
               ),
             ],

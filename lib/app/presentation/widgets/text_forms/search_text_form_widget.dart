@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wubba_lubba/app/presentation/theme/app_colors.dart';
 
 class SearchTextFormWidget extends StatelessWidget {
   final TextEditingController controller;
@@ -24,17 +25,17 @@ class SearchTextFormWidget extends StatelessWidget {
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: const TextStyle(color: Colors.white),
-          fillColor: Colors.white.withAlpha(15),
+          hintStyle: const TextStyle(color: AppColors.textPrimary),
+          fillColor: AppColors.secondaryBackground,
           filled: true,
           prefixIcon: const Icon(
             Icons.search,
-            color: Colors.white70,
+            color: AppColors.textPrimary,
           ),
           suffixIcon: IconButton(
             icon: const Icon(
               Icons.clear,
-              color: Colors.white70,
+              color: AppColors.textPrimary,
             ),
             onPressed: onClear,
           ),
@@ -43,7 +44,7 @@ class SearchTextFormWidget extends StatelessWidget {
             borderSide: BorderSide.none,
           ),
         ),
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: AppColors.textPrimary),
       ),
     );
   }

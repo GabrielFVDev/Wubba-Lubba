@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wubba_lubba/app/presentation/theme/app_colors.dart';
 
 class SectionTitleWidget extends StatelessWidget {
   final String title;
@@ -11,7 +12,7 @@ class SectionTitleWidget extends StatelessWidget {
     required this.title,
     this.fontSize = 20,
     this.fontWeight = FontWeight.bold,
-    this.color = Colors.white,
+    this.color = AppColors.textPrimary,
   });
 
   @override

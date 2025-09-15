@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wubba_lubba/app/presentation/theme/app_colors.dart';
 
 class InfoCardWidget extends StatelessWidget {
   final String title;
@@ -19,10 +20,10 @@ class InfoCardWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: AppColors.secondaryBackground,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: color.withOpacity(0.3),
+          color: color,
         ),
       ),
       child: Column(
@@ -35,7 +36,7 @@ class InfoCardWidget extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  color: Colors.white.withOpacity(0.7),
+                  color: AppColors.textPrimary,
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
@@ -46,7 +47,7 @@ class InfoCardWidget extends StatelessWidget {
           Text(
             value,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),

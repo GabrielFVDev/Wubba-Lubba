@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:wubba_lubba/app/presentation/theme/app_colors.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -158,7 +159,7 @@ class _SplashScreenState extends State<SplashScreen>
                                         : index % 3 == 1
                                         ? const Color(0xFFFFD700)
                                         : const Color(0xFF4169E1))
-                                    .withOpacity(0.5),
+                                    .withValues(alpha: 0.5),
                             blurRadius: 4,
                           ),
                         ],
@@ -218,7 +219,7 @@ class _SplashScreenState extends State<SplashScreen>
                                       child: Icon(
                                         Icons.science,
                                         size: 80,
-                                        color: Colors.white,
+                                        color: AppColors.textPrimary,
                                       ),
                                     ),
                                   );

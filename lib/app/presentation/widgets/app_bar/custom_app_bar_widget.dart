@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wubba_lubba/app/presentation/theme/app_colors.dart';
 
 class CustomAppBarWidget extends StatelessWidget
     implements PreferredSizeWidget {
@@ -20,7 +21,7 @@ class CustomAppBarWidget extends StatelessWidget
     return AppBar(
       title: Text(
         text,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: AppColors.textPrimary),
       ),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -37,7 +38,7 @@ class CustomAppBarWidget extends StatelessWidget
               onPressed: onPressed,
               icon: const Icon(
                 Icons.arrow_back,
-                color: Colors.white,
+                color: AppColors.textPrimary,
               ),
             ),
     );

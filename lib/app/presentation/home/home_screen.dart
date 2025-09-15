@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wubba_lubba/app/presentation/presentation.dart';
 import 'package:wubba_lubba/app/domain/domain.dart';
+import 'package:wubba_lubba/app/presentation/theme/app_colors.dart';
 import 'package:wubba_lubba/app/presentation/widgets/app_bar/custom_app_bar_widget.dart';
 import 'package:wubba_lubba/app/presentation/widgets/cards/character_card_widget.dart';
 
@@ -68,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         state.message,
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: AppColors.textPrimary),
                       ),
                       const SizedBox(height: 8),
                       ElevatedButton(
@@ -89,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       const Text(
                         'No characters found',
-                        style: TextStyle(color: Colors.white70),
+                        style: TextStyle(color: AppColors.textPrimary),
                       ),
                       const SizedBox(height: 8),
                       ElevatedButton(
