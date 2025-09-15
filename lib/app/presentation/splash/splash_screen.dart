@@ -123,7 +123,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D1421),
+      backgroundColor: AppColors.primaryBackground,
       body: Stack(
         children: [
           ...List.generate(15, (index) {
@@ -147,19 +147,19 @@ class _SplashScreenState extends State<SplashScreen>
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: index % 3 == 0
-                            ? const Color(0xFF00D4AA)
+                            ? AppColors.greenNeon
                             : index % 3 == 1
-                            ? const Color(0xFFFFD700)
-                            : const Color(0xFF4169E1),
+                            ? AppColors.particleGold
+                            : AppColors.particleBlue,
                         boxShadow: [
                           BoxShadow(
                             color:
                                 (index % 3 == 0
-                                        ? const Color(0xFF00D4AA)
+                                        ? AppColors.greenNeon
                                         : index % 3 == 1
-                                        ? const Color(0xFFFFD700)
-                                        : const Color(0xFF4169E1))
-                                    .withValues(alpha: 0.5),
+                                        ? AppColors.particleGold
+                                        : AppColors.particleBlue)
+                                    .withAlpha(5),
                             blurRadius: 4,
                           ),
                         ],
@@ -191,9 +191,7 @@ class _SplashScreenState extends State<SplashScreen>
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(
-                                    0xFF00D4AA,
-                                  ).withAlpha(5),
+                                  color: AppColors.greenNeon.withAlpha(5),
                                   blurRadius: 30,
                                   spreadRadius: 10,
                                 ),
@@ -207,13 +205,7 @@ class _SplashScreenState extends State<SplashScreen>
                                   return Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      gradient: const RadialGradient(
-                                        colors: [
-                                          Color(0xFF00D4AA),
-                                          Color(0xFF008B8B),
-                                          Color(0xFF004D4D),
-                                        ],
-                                      ),
+                                      gradient: AppColors.portalGradient,
                                     ),
                                     child: const Center(
                                       child: Icon(

@@ -32,6 +32,7 @@ class AppWidget extends StatelessWidget {
       child: MaterialApp.router(
         title: 'Wubba Lubba',
         routerConfig: router,
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

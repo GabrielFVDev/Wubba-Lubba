@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D1421),
+      backgroundColor: AppColors.primaryBackground,
       appBar: CustomAppBarWidget(
         text: 'Galeria Interdimensional',
       ),
@@ -59,7 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: BlocBuilder<CharactersBloc, CharactersState>(
             builder: (context, state) {
               if (state is CharactersLoading || state is CharactersInitial) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.greenNeon,
+                  ),
+                );
               }
 
               if (state is CharactersError) {
@@ -119,8 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: characters.length,
                         separatorBuilder: (_, __) => const SizedBox(height: 8),
                         itemBuilder: (context, index) {
-                          final CharacterEntity c = characters[index];
-                          return CharacterCardWidget(character: c);
+                          final CharacterEntity character = characters[index];
+                          return CharacterCardWidget(character: character);
                         },
                       ),
                     ),

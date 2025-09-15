@@ -31,7 +31,11 @@ class DetailsScreen extends StatelessWidget {
         child: BlocBuilder<CharactersBloc, CharactersState>(
           builder: (context, state) {
             if (state is CharactersLoading || state is CharactersInitial) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.greenNeon,
+                ),
+              );
             }
 
             if (state is CharactersError) {
@@ -53,16 +57,8 @@ class DetailsScreen extends StatelessWidget {
                       children: [
                         Container(
                           height: 400,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                const Color(0xFF0D1421).withAlpha(204),
-                                const Color(0xFF0D1421),
-                              ],
-                            ),
+                          decoration: const BoxDecoration(
+                            gradient: AppColors.heroGradient,
                           ),
                         ),
 
@@ -125,7 +121,7 @@ class DetailsScreen extends StatelessWidget {
                                   title: 'Species',
                                   value: character.species,
                                   icon: Icons.pets,
-                                  color: Colors.green,
+                                  color: AppColors.accentSecondary,
                                 ),
                               ),
                               const SizedBox(width: 16),
@@ -149,7 +145,7 @@ class DetailsScreen extends StatelessWidget {
                             title: 'Origin',
                             location: character.origin['name'] ?? 'Unknown',
                             icon: Icons.home,
-                            color: Colors.blue,
+                            color: AppColors.info,
                           ),
 
                           const SizedBox(height: 12),
@@ -158,7 +154,7 @@ class DetailsScreen extends StatelessWidget {
                             title: 'Current Location',
                             location: character.location['name'] ?? 'Unknown',
                             icon: Icons.location_on,
-                            color: Colors.red,
+                            color: AppColors.statusDead,
                           ),
 
                           const SizedBox(height: 24),
@@ -172,14 +168,14 @@ class DetailsScreen extends StatelessWidget {
                               color: AppColors.secondaryBackground,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: AppColors.textPrimary,
+                                color: AppColors.purple,
                               ),
                             ),
                             child: Row(
                               children: [
                                 Icon(
                                   Icons.tv,
-                                  color: Colors.purple.shade300,
+                                  color: AppColors.purple,
                                   size: 24,
                                 ),
                                 const SizedBox(width: 12),
@@ -208,7 +204,7 @@ class DetailsScreen extends StatelessWidget {
               return const Center(
                 child: Text(
                   'No character found',
-                  style: TextStyle(color: AppColors.textPrimary),
+                  style: TextStyle(color: AppColors.error),
                 ),
               );
             }
