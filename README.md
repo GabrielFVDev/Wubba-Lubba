@@ -18,9 +18,9 @@
 
 ## 📱 Sobre o Projeto
 
-Este projeto foi desenvolvido como parte de um **desafio técnico para desenvolvedor Flutter júnior**. O aplicativo consome a [Rick and Morty API](https://rickandmortyapi.com/) para exibir informações sobre personagens do universo da série.
+Este projeto foi desenvolvido como parte de um **desafio técnico**. O aplicativo consome a [Rick and Morty API](https://rickandmortyapi.com/) para exibir informações sobre personagens do universo da série.
 
-Queria agradecer a Way Data Solutions pelo desafio! Muito obrigado por terem me selecionado para o desafio técnico.
+Queria agradecer a Way Data Solutions pelo desafio! Muito obrigado por ter me selecionado para o desafio técnico.
 
 ### ✨ Funcionalidades
 
