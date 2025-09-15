@@ -69,18 +69,40 @@ class _HomeScreenState extends State<HomeScreen> {
 
               if (state is CharactersError) {
                 return Center(
-                  child: Text(
-                    state.message,
-                    style: const TextStyle(color: Colors.white),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        state.message,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      const SizedBox(height: 8),
+                      ElevatedButton(
+                        onPressed: () => context.read<CharactersBloc>().add(
+                          LoadCharacters(),
+                        ),
+                        child: const Text('Retry'),
+                      ),
+                    ],
                   ),
                 );
               }
 
               if (state is CharactersEmpty) {
-                return const Center(
-                  child: Text(
-                    'No characters found',
-                    style: TextStyle(color: Colors.white70),
+                return Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'No characters found',
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                      const SizedBox(height: 8),
+                      ElevatedButton(
+                        onPressed: _onClearSearch,
+                        child: const Text('Clear search'),
+                      ),
+                    ],
                   ),
                 );
               }

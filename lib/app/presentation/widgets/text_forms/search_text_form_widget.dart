@@ -24,7 +24,8 @@ class SearchTextFormWidget extends StatelessWidget {
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
           hintText: hintText,
-          fillColor: Colors.white.withOpacity(0.06),
+          hintStyle: const TextStyle(color: Colors.white),
+          fillColor: Colors.white.withAlpha(15),
           filled: true,
           prefixIcon: const Icon(
             Icons.search,

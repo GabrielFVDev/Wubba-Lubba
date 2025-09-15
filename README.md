@@ -20,6 +20,8 @@
 
 Este projeto foi desenvolvido como parte de um **desafio técnico para desenvolvedor Flutter júnior**. O aplicativo consome a [Rick and Morty API](https://rickandmortyapi.com/) para exibir informações sobre personagens do universo da série.
 
+Queria agradecer a Way Data Solutions pelo desafio! Muito obrigado por terem me selecionado para o desafio técnico.
+
 ### ✨ Funcionalidades
 
 - 🎭 **Lista de Personagens**: Visualize todos os personagens com nome, imagem e status
@@ -28,24 +30,6 @@ Este projeto foi desenvolvido como parte de um **desafio técnico para desenvolv
 - 🎨 **Interface Moderna**: Design dark temático inspirado no universo Rick and Morty
 - ⚡ **Animações Suaves**: Transições fluidas entre telas
 - 🔄 **Pull to Refresh**: Atualize a lista com gesture nativo
-
----
-
-## 🎯 Demonstração
-
-### Splash Screen → Lista → Detalhes
-
-```
-🌀 Portal Animado → 📋 Lista de Personagens → 👤 Detalhes do Personagem
-```
-
-### Funcionalidades Principais:
-
-- ✅ Splash screen com animação de portal e áudio
-- ✅ Lista responsiva com busca
-- ✅ Cards de personagens com status visual
-- ✅ Tela de detalhes com informações completas
-- ✅ Navegação fluida com animações customizadas
 
 ---
 
@@ -78,15 +62,23 @@ Este projeto foi desenvolvido como parte de um **desafio técnico para desenvolv
    flutter run
    ```
 
-4. **Para build de produção**
+---
 
-   ```bash
-   # Android
-   flutter build apk --release
+## 🎯 Demonstração
 
-   # iOS
-   flutter build ios --release
-   ```
+### Splash Screen → Lista → Detalhes
+
+```
+🌀 Portal Animado → 📋 Lista de Personagens → 👤 Detalhes do Personagem
+```
+
+### Funcionalidades Principais:
+
+- ✅ Splash screen com animação de portal e áudio
+- ✅ Lista responsiva com busca
+- ✅ Cards de personagens com status visual
+- ✅ Tela de detalhes com informações completas
+- ✅ Navegação fluida com animações customizadas
 
 ---
 
@@ -106,22 +98,110 @@ lib/
 └── shared/           # 🔄 Recursos Compartilhados
 ```
 
+**Por que Clean Architecture?**
+
+- ✅ **Separação de responsabilidades**: Cada camada tem uma função específica
+- ✅ **Testabilidade**: Facilita a criação de testes unitários
+- ✅ **Manutenibilidade**: Código mais organizado e fácil de modificar
+- ✅ **Escalabilidade**: Permite crescimento do projeto sem comprometer a estrutura
+- ✅ **Independência**: Business logic não depende de frameworks ou APIs
+
 ### 🛠️ Stack Tecnológica
 
-| Categoria                   | Tecnologia     | Justificativa                          |
-| --------------------------- | -------------- | -------------------------------------- |
-| **Gerenciamento de Estado** | `flutter_bloc` | Padrão robusto, testável e escalável   |
-| **Navegação**               | `go_router`    | Navegação declarativa e type-safe      |
-| **HTTP Client**             | `dio`          | Cliente HTTP poderoso com interceptors |
-| **Áudio**                   | `just_audio`   | Reprodução de áudio para splash screen |
-| **Comparação**              | `equatable`    | Comparação eficiente de objetos        |
+| Categoria                   | Tecnologia     | Por que escolhi?                                                                                     |
+| --------------------------- | -------------- | ---------------------------------------------------------------------------------------------------- |
+| **Gerenciamento de Estado** | `flutter_bloc` | ✅ Padrão robusto usado pela comunidade<br>✅ Facilita testes<br>✅ Previsível e debugável           |
+| **Navegação**               | `go_router`    | ✅ Navegação declarativa moderna<br>✅ Type-safe<br>✅ Suporte nativo a deep links                   |
+| **HTTP Client**             | `dio`          | ✅ Interceptors para logs e erros<br>✅ Cancelamento de requisições<br>✅ Retry automático           |
+| **Áudio**                   | `just_audio`   | ✅ Controle preciso de reprodução<br>✅ Suporte multiplataforma<br>✅ Boa performance                |
+| **Comparação**              | `equatable`    | ✅ Evita rebuilds desnecessários<br>✅ Facilita comparação de estados<br>✅ Melhora performance BLoC |
 
-### 🎨 Decisões de Design
+### 🎨 Decisões de Design e UX
 
-- **Tema Dark**: Inspirado no universo sci-fi de Rick and Morty
-- **Cores Temáticas**: Verde (alive), vermelho (dead), laranja (unknown)
-- **Animações**: Transições suaves para melhor UX
-- **Responsividade**: Interface adaptável para diferentes tamanhos de tela
+#### **Interface do Usuário**
+
+- **Tema Dark**:
+
+  - ✅ Inspirado no universo sci-fi de Rick and Morty
+  - ✅ Menos cansativo para os olhos
+  - ✅ Destaca melhor as cores dos status dos personagens
+
+- **Cores Temáticas por Status**:
+  - 🟢 **Verde** (Alive): Transmite vida e energia
+  - 🔴 **Vermelho** (Dead): Indica claramente o status
+  - 🟠 **Laranja** (Unknown): Neutro para status indefinido
+
+#### **Animações e Transições**
+
+```dart
+// Por que implementar animações customizadas?
+// ✅ Melhora a percepção de qualidade do app
+// ✅ Feedback visual para ações do usuário
+// ✅ Torna a navegação mais fluida e intuitiva
+
+CustomTransitionPage(
+  child: HomeScreen(),
+  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    return SlideTransition(/* Animação suave de slide */);
+  },
+)
+```
+
+#### **Componentização**
+
+- **Widgets Reutilizáveis**:
+  - ✅ `CharacterCardWidget`: Consistência visual em toda lista
+  - ✅ `StatusChipWidget`: Padronização de status
+  - ✅ `CustomAppBarWidget`: AppBar personalizada reutilizável
+  - ✅ `InfoCardWidget`: Cards de informação uniformes
+
+**Por que componentizar?**
+
+- ✅ **DRY (Don't Repeat Yourself)**: Evita duplicação de código
+- ✅ **Consistência**: Mesmo design em todo o app
+- ✅ **Manutenção**: Mudanças centralizadas em um lugar
+- ✅ **Testabilidade**: Testa componentes isoladamente
+
+### 🔧 Tratamento de Erros
+
+#### **Estratégia Simples e Eficaz**
+
+```dart
+// Por que essa abordagem?
+// ✅ Mensagens amigáveis ao usuário
+// ✅ Diferenciação de tipos de erro
+// ✅ Ações de recovery (Retry)
+
+String _getErrorMessage(dynamic error) {
+  if (errorString.contains('network')) return 'Sem conexão com a internet';
+  if (errorString.contains('timeout')) return 'Conexão demorou muito';
+  if (errorString.contains('server')) return 'Erro no servidor';
+  return 'Algo deu errado. Tente novamente';
+}
+```
+
+#### **User Experience de Erro**
+
+- ✅ **SnackBar com ação**: Permite retry imediato
+- ✅ **Botões de retry**: Na tela de erro principal
+- ✅ **Estados específicos**: Loading, Empty, Error bem definidos
+- ✅ **Feedback visual**: Usuário sempre sabe o que está acontecendo
+
+### 📱 Responsividade e Performance
+
+#### **Decisões de Performance**
+
+- ✅ **ListView.separated**: Renderização otimizada para listas grandes
+- ✅ **BlocConsumer**: Escuta estados sem rebuilds desnecessários
+- ✅ **Cached Network Images**: (Implícito no Image.network com cache)
+- ✅ **Estados granulares**: Só rebuilda o que precisa
+
+#### **Experiência Mobile**
+
+- ✅ **Pull to Refresh**: Gesto nativo esperado pelos usuários
+- ✅ **Search em tempo real**: Feedback imediato na busca
+- ✅ **Loading states**: Feedback visual durante carregamentos
+- ✅ **Safe Area**: Respeita notch e barras do sistema
 
 ---
 
