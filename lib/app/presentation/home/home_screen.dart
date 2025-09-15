@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wubba_lubba/app/presentation/presentation.dart';
-import 'package:go_router/go_router.dart';
 import 'package:wubba_lubba/app/domain/domain.dart';
 import 'package:wubba_lubba/app/presentation/widgets/app_bar/custom_app_bar_widget.dart';
+import 'package:wubba_lubba/app/presentation/widgets/cards/character_card_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -104,52 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         separatorBuilder: (_, __) => const SizedBox(height: 8),
                         itemBuilder: (context, index) {
                           final CharacterEntity c = characters[index];
-                          return ListTile(
-                            onTap: () {
-                              // Load details and navigate to details screen if exists
-                              context.read<CharactersBloc>().add(
-                                LoadCharacterById(c.id),
-                              );
-                              context.push('/details/${c.id}');
-                            },
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
-                            ),
-                            tileColor: Colors.white.withOpacity(0.04),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                c.image,
-                                width: 56,
-                                height: 56,
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => Container(
-                                  width: 56,
-                                  height: 56,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                            title: Text(
-                              c.name,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            subtitle: Text(
-                              '${c.species} • ${c.status}',
-                              style: const TextStyle(color: Colors.white70),
-                            ),
-                            trailing: const Icon(
-                              Icons.chevron_right,
-                              color: Colors.white70,
-                            ),
-                          );
+                          return CharacterCardWidget(character: c);
                         },
                       ),
                     ),
