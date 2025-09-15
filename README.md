@@ -30,6 +30,27 @@ Queria agradecer a Way Data Solutions pelo desafio! Muito obrigado por terem me 
 - 🎨 **Interface Moderna**: Design dark temático inspirado no universo Rick and Morty
 - ⚡ **Animações Suaves**: Transições fluidas entre telas
 - 🔄 **Pull to Refresh**: Atualize a lista com gesture nativo
+- ♿ **Acessibilidade Completa**: Suporte a leitores de tela e navegação assistiva
+- 📱 **Responsividade**: Adaptação automática para celulares de todos os tamanhos
+
+### 🌟 Acessibilidade e Inclusão
+
+- **🔊 Screen Readers**: Suporte completo para TalkBack (Android) e VoiceOver (iOS)
+- **🔍 Navegação por Foco**: Navegação otimizada por teclado e gestos
+- **📏 Escalabilidade**: Fontes e elementos se adaptam ao tamanho da tela
+- **🎯 Semântica Rica**: Labels e hints descritivos para cada elemento
+- **⚡ Feedback Tátil**: Tooltips e splash radius responsivos
+- **🔄 Estados Anunciados**: Mudanças de estado comunicadas aos assistivos
+
+### 📱 Responsividade Multi-Dispositivo
+
+| Tamanho         | Largura       | Exemplos                          | Adaptações                              |
+| --------------- | ------------- | --------------------------------- | --------------------------------------- |
+| **Extra Small** | < 320px       | iPhone SE (1ª gen)                | Elementos compactos, fonte menor        |
+| **Small**       | 320px - 375px | iPhone SE, Galaxy S5              | Layout otimizado para telas pequenas    |
+| **Medium**      | 375px - 414px | iPhone 8, X, Galaxy S8            | Tamanhos padrão, boa legibilidade       |
+| **Large**       | 414px - 480px | iPhone Plus, Galaxy Note          | Elementos maiores, mais espaçamento     |
+| **Extra Large** | > 480px       | Tablets pequenos, Android grandes | Layout expandido, melhor aproveitamento |
 
 ---
 
